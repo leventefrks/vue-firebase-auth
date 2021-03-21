@@ -1,5 +1,12 @@
 # vue-firebase-auth
 
+Vue Firebase using Email & Google Authentications
+
+- Vue CLI
+- Vue Router
+- Vuelidate
+- Firebase
+- TailwindCSS
 ## Project setup
 ```
 npm install
