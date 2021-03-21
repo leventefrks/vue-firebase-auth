@@ -6,14 +6,14 @@
         <form @submit.prevent="register" class="mt-6">
           <div class="my-5 text-sm">
               <label for="email" class="block text-black">Email</label>
-              <input type="text" v-model="form.email" @blur="$v.form.email.$touch" autofocus id="email" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Email"  :class="{ 'border-red-500': $v.form.email.$error }" />
+              <input type="text" v-model="form.email" @blur="$v.form.email.$touch" autofocus id="email" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Email"  :class="{ 'border-1 border-red-500': $v.form.email.$error }" />
               <div v-if="!$v.form.email.required && $v.form.email.$error" class="text-red-500">The email field is required</div>
               <div v-else-if="!$v.form.email.email && $v.form.email.$error" class="text-red-500">The email field is invalid</div>
           </div>
           <div class="my-5 text-sm">
               <label for="password" class="block text-black">Password</label>
               <input type="password" v-model="form.password" @blur="$v.form.password.$touch"  id="password" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Password"
-                :class="{ 'border-red-500': $v.form.password.$error }"
+                :class="{ 'border-1 border-red-500': $v.form.password.$error }"
                 />
               <div v-if="$v.form.password.$error" class="text-red-500">The password field is required</div>
               <div class="flex justify-end mt-2 text-xs text-gray-600">
@@ -68,7 +68,7 @@ export default {
     register () {
       this.onTouchForm();
       if (!this.$v.form.$error) {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+        firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password);
       }
     },
 
