@@ -17,6 +17,18 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/Register.vue"),
   },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+  },
+  {
+    path: "*",
+    name: "PageNotFound",
+    component: () =>
+      import(/* webpackChunkName: "page-not-found" */ "../views/PageNotFound.vue"),
+  },
 ];
 
 const router = new VueRouter({

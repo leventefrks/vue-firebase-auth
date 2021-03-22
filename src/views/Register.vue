@@ -1,7 +1,5 @@
-<template>
-  <div>
-    <app-register />
-  </div>
+<template lang="html">
+  <app-register />
 </template>
 
 <script>
