@@ -30,7 +30,7 @@
         <div class="flex items-center justify-center mt-7">
           <button class="text-center w-full text-white bg-red-500 p-3 duration-300 rounded-sm hover:bg-red-600">Google</button>
         </div>
-        <div class="pt-6 text-xs text-center font-light text-gray-400">Don't have an account? <router-link to="/register" class="text-black font-medium">Create One</router-link></div> 
+        <div class="pt-6 text-xs text-center font-light text-gray-400">Don't have an account? <router-link to="/register" class="text-black font-medium underline">Create One</router-link></div> 
       </div>
     </div>
   </div>

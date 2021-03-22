@@ -15,25 +15,26 @@
               <input type="password" v-model="form.password" @blur="$v.form.password.$touch"  id="password" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Password"
                 :class="{ 'border-1 border-red-500': $v.form.password.$error }"
                 />
-              <div v-if="$v.form.password.$error" class="text-red-500">The password field is required</div>
+              <div v-if="$v.form.password.$required" class="text-red-500">The password field is required</div>
+              <div v-else-if="!$v.form.password.minLength" class="text-red-500">The password field should have 3 characters</div>
           </div>
           <div class="my-5 text-sm">
-              <label for="password" class="block text-black">Password Again</label>
-              <input type="password" v-model="form.password" @blur="$v.form.password.$touch"  id="password" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Password"
-                :class="{ 'border-1 border-red-500': $v.form.password.$error }"
+              <label for="secondary-password" class="block text-black">Confirm Password</label>
+              <input type="password" v-model="form.secondaryPassword" @blur="$v.form.secondaryPassword.$touch" id="secondary-password" class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full" placeholder="Password"
+                :class="{ 'border-1 border-red-500': $v.form.secondaryPassword.$error }"
                 />
-              <div v-if="$v.form.password.$error" class="text-red-500">The password field is required</div>
+              <div v-if="$v.form.secondaryPassword.$error" class="text-red-500">The confirm password should be the same as the password</div>
           </div>
           <button class="block text-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full">Register</button>
         </form>
-              <div class="pt-6 text-xs text-center font-light text-gray-400">You have an account? <router-link to="/" class="text-black font-medium">Login</router-link></div> 
+        <div class="pt-6 text-xs text-center font-light text-gray-400">Have an account? <router-link to="/" class="text-black font-medium underline">Login</router-link></div> 
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators';
+import { required, email, sameAs, minLength } from 'vuelidate/lib/validators';
 import firebase from 'firebase';
 
 export default {
@@ -47,7 +48,13 @@ export default {
       },
 
       password: {
-        required
+        required,
+        minLength: minLength(3)
+      },
+
+      secondaryPassword: {
+        required,
+        sameAsPassword: sameAs('password')
       }
     }
   },
@@ -56,7 +63,8 @@ export default {
     return {
       form: {
         email: null,
-        password: null
+        password: null,
+        secondaryPassword: null
       }
     }
   },
