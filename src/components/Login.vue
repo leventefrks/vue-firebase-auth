@@ -9,7 +9,6 @@
             type="text"
             v-model="form.email"
             @blur="$v.form.email.$touch"
-            autofocus
             id="email"
             class="rounded-sm px-4 py-3 mt-3 bg-gray-100 w-full"
             placeholder="Email"
