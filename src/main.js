@@ -13,17 +13,10 @@ Vue.config.productionTip = false;
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  });
-};
-
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+firebase.auth().onAuthStateChanged(() => {
+  new Vue({
+    router,
+    store,
+    render: (h) => h(App),
+  }).$mount("#app");
+});

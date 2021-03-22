@@ -16,10 +16,6 @@ import firebase from "firebase";
 export default {
   name: "Dashboard",
 
-  created() {
-    console.log(firebase.getCurrentUser());
-  },
-
   methods: {
     signOut() {
       firebase.auth().signOut();

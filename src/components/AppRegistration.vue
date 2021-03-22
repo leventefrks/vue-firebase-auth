@@ -2,7 +2,7 @@
   <div class="bg-white lg:w-4/12 md:6/12 w-10/12 m-auto shadow-2xl">
     <div class="py-8 px-8 rounded-xl">
       <h1 class="font-medium text-2xl mt-3 text-center">Registration</h1>
-      <form v-if="!isRegistered" @submit.prevent="register" class="mt-6">
+      <form @submit.prevent="register" class="mt-6">
         <div class="my-5 text-sm">
           <label for="email" class="block text-black">Email</label>
           <input
@@ -40,7 +40,7 @@
             :class="{ 'border-1 border-red-500': $v.form.password.$error }"
           />
           <div
-            v-if="!$v.form.email.required && $v.form.email.$error"
+            v-if="!$v.form.password.required && $v.form.password.$error"
             class="text-red-500"
           >
             The password field is required
@@ -86,7 +86,7 @@
         </div>
       </form>
       <div
-        v-if="isRegistered"
+        v-if="false"
         class="flex flex-col items-center mt-6 text-center"
       >
         <span class="text-xl text-green-500"
@@ -96,6 +96,14 @@
           to="/"
           class="mt-4 text-black text-xs hover:text-gray-700 font-medium underline"
           >Please Sign In</router-link
+        >
+      </div>
+      <div
+        v-if="isLoading"
+        class="flex flex-col items-center mt-6 text-center"
+      >
+        <span class="text-xl text-black"
+          >Loading...</span
         >
       </div>
     </div>
@@ -136,7 +144,7 @@ export default {
         secondaryPassword: null,
       },
       errorMessage: "",
-      isRegistered: false,
+      isLoading: false
     };
   },
 
@@ -144,16 +152,16 @@ export default {
     register() {
       this.onTouchForm();
       if (!this.$v.form.$error) {
+        this.isLoading = true;
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.form.email, this.form.password)
           .then(() => {
-            this.isRegistered = true;
-            // this.form.email = null;
-            // this.form.password = null;
-            // this.form.secondaryPassword = null;
+            this.isLoading = false;
+            this.$router.push('/dashboard')
           })
           .catch((error) => {
+            this.isLoading = false;
             console.log(error.message);
           });
       }
