@@ -1,17 +1,17 @@
 <template>
-  <div class="">
-    <register />
+  <div>
+    <login />
   </div>
 </template>
 
 <script>
-import Register from "@/components/Register.vue";
+import Login from "@/components/Login.vue";
 
 export default {
-  name: "Main",
+  name: "Home",
   
   components: {
-    Register
+    Login
   },
 };
 </script>
