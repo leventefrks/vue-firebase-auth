@@ -22,12 +22,18 @@ const routes = [
     name: "Dashboard",
     component: () =>
       import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
-    path: "*",
+    path: "/404",
+    alias: "*",
     name: "PageNotFound",
     component: () =>
-      import(/* webpackChunkName: "page-not-found" */ "../views/PageNotFound.vue"),
+      import(
+        /* webpackChunkName: "page-not-found" */ "../views/PageNotFound.vue"
+      ),
   },
 ];
 

@@ -116,7 +116,6 @@ export default {
       form: {
         email: null,
         password: null,
-
       },
     };
   },
@@ -127,7 +126,11 @@ export default {
       if (!this.$v.form.$error) {
         firebase
           .auth()
-          .createUserWithEmailAndPassword(this.form.email, this.form.password);
+          .signInWithEmailAndPassword(this.form.email, this.form.password)
+          .then(() => this.$router.push("/dashboard"))
+          .catch((error) => {
+            console.log(error.message);
+          });
       }
     },
 

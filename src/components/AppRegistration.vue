@@ -1,8 +1,8 @@
 <template>
   <div class="bg-white lg:w-4/12 md:6/12 w-10/12 m-auto shadow-2xl">
     <div class="py-8 px-8 rounded-xl">
-      <h1 class="font-medium text-2xl mt-3 text-center">Register</h1>
-      <form @submit.prevent="register" class="mt-6">
+      <h1 class="font-medium text-2xl mt-3 text-center">Registration</h1>
+      <form v-if="!isRegistered" @submit.prevent="register" class="mt-6">
         <div class="my-5 text-sm">
           <label for="email" class="block text-black">Email</label>
           <input
@@ -39,7 +39,10 @@
             placeholder="Password"
             :class="{ 'border-1 border-red-500': $v.form.password.$error }"
           />
-          <div v-if="$v.form.password.$required" class="text-red-500">
+          <div
+            v-if="!$v.form.email.required && $v.form.email.$error"
+            class="text-red-500"
+          >
             The password field is required
           </div>
           <div v-else-if="!$v.form.password.minLength" class="text-red-500">
@@ -65,17 +68,34 @@
             The confirm password should be the same as the password
           </div>
         </div>
+        <div v-if="errorMessage" class="text-red-500">
+          {{ error.message }}
+        </div>
         <button
           class="block text-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full"
         >
           Register now
         </button>
+        <div class="pt-6 text-xs text-center font-light text-gray-400">
+          Have an account?
+          <router-link
+            to="/"
+            class="text-black hover:text-gray-700 font-medium underline"
+            >Login</router-link
+          >
+        </div>
       </form>
-      <div class="pt-6 text-xs text-center font-light text-gray-400">
-        Have an account? <router-link
+      <div
+        v-if="isRegistered"
+        class="flex flex-col items-center mt-6 text-center"
+      >
+        <span class="text-xl text-green-500"
+          >Registration completed successfully</span
+        >
+        <router-link
           to="/"
-          class="text-black hover:text-gray-700 font-medium underline"
-          >Login</router-link
+          class="mt-4 text-black text-xs hover:text-gray-700 font-medium underline"
+          >Please Sign In</router-link
         >
       </div>
     </div>
@@ -87,7 +107,7 @@ import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 import firebase from "firebase";
 
 export default {
-  name: "Register",
+  name: "Registration",
 
   validations: {
     form: {
@@ -115,6 +135,8 @@ export default {
         password: null,
         secondaryPassword: null,
       },
+      errorMessage: "",
+      isRegistered: false,
     };
   },
 
@@ -124,7 +146,16 @@ export default {
       if (!this.$v.form.$error) {
         firebase
           .auth()
-          .createUserWithEmailAndPassword(this.form.email, this.form.password);
+          .createUserWithEmailAndPassword(this.form.email, this.form.password)
+          .then(() => {
+            this.isRegistered = true;
+            // this.form.email = null;
+            // this.form.password = null;
+            // this.form.secondaryPassword = null;
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       }
     },
 

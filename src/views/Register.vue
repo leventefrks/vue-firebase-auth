@@ -1,16 +1,16 @@
 <template lang="html">
-  <app-register />
+  <app-registration />
 </template>
 
 <script>
 
-import AppRegister from '@/components/AppRegister';
+import AppRegistration from '@/components/AppRegistration';
 
 export default {
   name: "Register",
 
   components: {
-    AppRegister
+    AppRegistration
   }
 };
 </script>
