@@ -114,7 +114,7 @@ import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 import firebase from "firebase";
 
 export default {
-  name: "Registration",
+  name: "RegistrationForm",
 
   validations: {
     form: {

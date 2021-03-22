@@ -81,7 +81,7 @@
       <div class="pt-6 text-xs text-center font-light text-gray-400">
         Don't have an account?
         <router-link
-          to="/register"
+          to="/registration"
           class="text-black hover:text-gray-700 font-medium underline"
           >Create One</router-link
         >
@@ -95,7 +95,7 @@ import { required, email } from "vuelidate/lib/validators";
 import firebase from "firebase";
 
 export default {
-  name: "Register",
+  name: "LoginForm",
 
   validations: {
     form: {
