@@ -75,7 +75,7 @@
           :class="$v.form.$error ? 'bg-gray-300 text-gray-800 cursor-default' : 'bg-gray-800 hover:bg-black'"
           :disabled="$v.form.$error"
         >
-          <loading v-if="isLoading" class="w-4 h-4 fill-current animate-spin duration-75" />
+          <loading v-if="false" class="w-4 h-4 fill-current animate-spin duration-75" />
           <span class="ml-4">Register now</span>
         </button>
         <div class="pt-6 text-xs text-center font-light text-gray-400">

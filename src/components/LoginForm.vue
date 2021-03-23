@@ -52,7 +52,7 @@
           :class="$v.form.$error ? 'bg-gray-300 text-gray-800 cursor-default' : 'bg-gray-800 hover:bg-black'"
           :disabled="$v.form.$error"
         >
-          <loading v-if="isLoading"  class="w-4 h-4 fill-current animate-spin duration-75" />
+          <loading v-if="false"  class="w-4 h-4 fill-current animate-spin duration-75" />
           <span class="ml-4">Login</span>
         </button>
         <div v-if="errorMessage" class="mt-2 text-red-500">
@@ -75,6 +75,7 @@
       <div class="flex items-center justify-between space-x-4 mt-7">
         <button
           class="flex items-center justify-center w-full text-white bg-red-500 p-3 duration-300 rounded-sm hover:bg-red-600"
+          @click="signInWithGoogle"
         >
           <google class="mr-3 w-4 h-4 fill-current" />
           Google
@@ -152,6 +153,17 @@ export default {
             this.errorMessage = error.message;
           });
       }
+    },
+
+    signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      this.isLoading = true;
+      firebase.auth().signInWithPopup(provider)
+        .then((data) => this.$router.push({name: 'Dashboard', params: { user: data.user }}))
+        .catch((error) => {
+          this.isLoading = false;
+          this.errorMessage = error.message;
+        });
     },
 
     onTouchForm() {
