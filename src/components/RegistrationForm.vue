@@ -67,21 +67,23 @@
             The confirm password should be the same as the password
           </div>
         </div>
-        <div v-if="errorMessage" class="text-red-500">
+        <div v-if="errorMessage" class="mt-2 text-red-500">
           {{ errorMessage }}
         </div>
         <button
-          class="w-full flex items-center justify-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black"
+          class="flex items-center justify-center text-white p-3 duration-300 rounded-sm w-full"
+          :class="$v.form.$error ? 'bg-gray-300 text-gray-800 cursor-default' : 'bg-gray-800 hover:bg-black'"
+          :disabled="$v.form.$error"
         >
-         <img v-if="isLoading" svg-inline alt="loading" src="./../assets/svg/loading.svg" class="w-4 h-4 fill-current animate-spin duration-75" />
+          <loading v-if="isLoading" class="w-4 h-4 fill-current animate-spin duration-75" />
           <span class="ml-4">Register now</span>
         </button>
         <div class="pt-6 text-xs text-center font-light text-gray-400">
-          Have an account?
+          Already have an account?
           <router-link
             to="/"
             class="text-black hover:text-gray-700 font-medium underline"
-            >Login</router-link
+            >Log in</router-link
           >
         </div>
       </form>
@@ -90,11 +92,16 @@
 </template>
 
 <script>
+import loading from '@/assets/svg/loading.svg';
 import { required, email, sameAs, minLength } from "vuelidate/lib/validators";
 import firebase from "firebase";
 
 export default {
   name: "RegistrationForm",
+
+  components: {
+    loading
+  },
 
   validations: {
     form: {

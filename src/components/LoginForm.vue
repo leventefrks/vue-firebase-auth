@@ -48,12 +48,14 @@
           </div>
         </div>
         <button
-          class="flex items-center justify-center mb-4 text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full"
+          class="flex items-center justify-center text-white p-3 duration-300 rounded-sm w-full"
+          :class="$v.form.$error ? 'bg-gray-300 text-gray-800 cursor-default' : 'bg-gray-800 hover:bg-black'"
+          :disabled="$v.form.$error"
         >
-          <img v-if="isLoading" svg-inline alt="loading" src="./../assets/svg/loading.svg" class="w-4 h-4 fill-current animate-spin duration-75" />
+          <loading v-if="isLoading"  class="w-4 h-4 fill-current animate-spin duration-75" />
           <span class="ml-4">Login</span>
         </button>
-        <div v-if="errorMessage" class="text-red-500">
+        <div v-if="errorMessage" class="mt-2 text-red-500">
           {{ errorMessage }}
         </div>
       </form>
@@ -74,13 +76,13 @@
         <button
           class="flex items-center justify-center w-full text-white bg-red-500 p-3 duration-300 rounded-sm hover:bg-red-600"
         >
-          <img svg-inline alt="google logo" src="./../assets/svg/google.svg" class="mr-3 w-4 h-4 fill-current" />
+          <google class="mr-3 w-4 h-4 fill-current" />
           Google
         </button>
         <button
           class="flex items-center justify-center w-full text-white bg-blue-900 p-3 duration-300 rounded-sm hover:bg-blue-800"
         >
-          <img svg-inline alt="facebook logo" src="./../assets/svg/facebook.svg" class="mr-3 w-4 h-4 fill-current" />
+          <facebook class="mr-3 w-4 h-4 fill-current" />
           Facebook
         </button>
       </div>
@@ -97,11 +99,20 @@
 </template>
 
 <script>
+import loading from '@/assets/svg/loading.svg';
+import facebook from '@/assets/svg/facebook.svg';
+import google from '@/assets/svg/google.svg';
 import { required, email } from "vuelidate/lib/validators";
 import firebase from "firebase";
 
 export default {
   name: "LoginForm",
+
+  components: {
+    loading,
+    facebook,
+    google
+  },
 
   validations: {
     form: {
