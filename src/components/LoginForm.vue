@@ -59,7 +59,7 @@
           class="bg-gray-300 md:block hidden w-4/12"
         ></div>
         <p class="md:mx-2 text-sm text-center font-light text-gray-400">
-          Login With Social
+          or login with
         </p>
         <div
           style="height: 1px"
@@ -68,13 +68,15 @@
       </div>
       <div class="flex items-center justify-between space-x-4 mt-7">
         <button
-          class="text-center w-full text-white bg-red-500 p-3 duration-300 rounded-sm hover:bg-red-600"
+          class="flex items-center justify-center w-full text-white bg-red-500 p-3 duration-300 rounded-sm hover:bg-red-600"
         >
+          <img svg-inline alt="google logo" src="./../assets/svg/google.svg" class="mr-3 w-4 h-4 fill-current" />
           Google
         </button>
         <button
-          class="text-center w-full text-white bg-blue-900 p-3 duration-300 rounded-sm hover:bg-blue-800"
+          class="flex items-center justify-center w-full text-white bg-blue-900 p-3 duration-300 rounded-sm hover:bg-blue-800"
         >
+          <img svg-inline alt="facebook logo" src="./../assets/svg/facebook.svg" class="mr-3 w-4 h-4 fill-current" />
           Facebook
         </button>
       </div>
@@ -126,7 +128,7 @@ export default {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.form.email, this.form.password)
-          .then(() => this.$router.push("/dashboard"))
+          .then(() => this.$router.replace("/dashboard"))
           .catch((error) => {
             console.log(error.message);
           });

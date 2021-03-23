@@ -157,7 +157,7 @@ export default {
           .createUserWithEmailAndPassword(this.form.email, this.form.password)
           .then(() => {
             this.isLoading = false;
-            this.$router.push('/dashboard')
+            this.$router.replace('/dashboard')
           })
           .catch((error) => {
             this.isLoading = false;
