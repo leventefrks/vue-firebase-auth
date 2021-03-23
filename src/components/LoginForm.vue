@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white lg:w-4/12 md:6/12 w-10/12 m-auto shadow-2xl">
-    <div class="py-8 px-8 rounded-xl">
-      <h1 class="font-medium text-2xl mt-3 text-center">Login</h1>
+    <div class="py-6 px-8 rounded-xl">
+      <h1 class="font-medium text-2xl text-center">Login</h1>
       <form @submit.prevent="login" class="mt-6">
         <div class="my-5 text-sm">
           <label for="email" class="block text-black">Email</label>
@@ -48,10 +48,14 @@
           </div>
         </div>
         <button
-          class="block text-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full"
+          class="flex items-center justify-center mb-4 text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full"
         >
-          Login
+          <img v-if="isLoading" svg-inline alt="loading" src="./../assets/svg/loading.svg" class="w-4 h-4 fill-current animate-spin duration-75" />
+          <span class="ml-4">Login</span>
         </button>
+        <div v-if="errorMessage" class="text-red-500">
+          {{ errorMessage }}
+        </div>
       </form>
       <div class="flex md:justify-between justify-center items-center mt-10">
         <div
@@ -118,6 +122,8 @@ export default {
         email: null,
         password: null,
       },
+      isLoading: false,
+      errorMessage: null
     };
   },
 
@@ -125,12 +131,14 @@ export default {
     login() {
       this.onTouchForm();
       if (!this.$v.form.$error) {
+        this.isLoading = true;
         firebase
           .auth()
           .signInWithEmailAndPassword(this.form.email, this.form.password)
           .then(() => this.$router.replace("/dashboard"))
           .catch((error) => {
-            console.log(error.message);
+            this.isLoading = false;
+            this.errorMessage = error.message;
           });
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white lg:w-4/12 md:6/12 w-10/12 m-auto shadow-2xl">
-    <div class="py-8 px-8 rounded-xl">
-      <h1 class="font-medium text-2xl mt-3 text-center">Registration</h1>
+    <div class="py-6 px-8 rounded-xl">
+      <h1 class="font-medium text-2xl text-center">Registration</h1>
       <form @submit.prevent="register" class="mt-6">
         <div class="my-5 text-sm">
           <label for="email" class="block text-black">Email</label>
@@ -68,12 +68,13 @@
           </div>
         </div>
         <div v-if="errorMessage" class="text-red-500">
-          {{ error.message }}
+          {{ errorMessage }}
         </div>
         <button
-          class="block text-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black w-full"
+          class="w-full flex items-center justify-center text-white bg-gray-800 p-3 duration-300 rounded-sm hover:bg-black"
         >
-          Register now
+         <img v-if="isLoading" svg-inline alt="loading" src="./../assets/svg/loading.svg" class="w-4 h-4 fill-current animate-spin duration-75" />
+          <span class="ml-4">Register now</span>
         </button>
         <div class="pt-6 text-xs text-center font-light text-gray-400">
           Have an account?
@@ -84,27 +85,6 @@
           >
         </div>
       </form>
-      <div
-        v-if="false"
-        class="flex flex-col items-center mt-6 text-center"
-      >
-        <span class="text-xl text-green-500"
-          >Registration completed successfully</span
-        >
-        <router-link
-          to="/"
-          class="mt-4 text-black text-xs hover:text-gray-700 font-medium underline"
-          >Please Sign In</router-link
-        >
-      </div>
-      <div
-        v-if="isLoading"
-        class="flex flex-col items-center mt-6 text-center"
-      >
-        <span class="text-xl text-black"
-          >Loading...</span
-        >
-      </div>
     </div>
   </div>
 </template>
@@ -156,12 +136,11 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.form.email, this.form.password)
           .then(() => {
-            this.isLoading = false;
             this.$router.replace('/dashboard')
           })
           .catch((error) => {
             this.isLoading = false;
-            console.log(error.message);
+            this.errorMessage = error.message;
           });
       }
     },

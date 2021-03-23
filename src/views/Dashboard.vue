@@ -18,8 +18,13 @@ export default {
 
   methods: {
     signOut() {
-      firebase.auth().signOut();
-      this.$router.push('/');
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.replace("/");
+        })
+        .catch((error) => console.log(error.message));
     },
   },
 };
